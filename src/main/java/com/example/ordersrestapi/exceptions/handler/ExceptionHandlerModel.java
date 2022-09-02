@@ -18,18 +18,20 @@ public class ExceptionHandlerModel {
                     .message(cozinha.getMessage())
                     .status(HttpStatus.NOT_FOUND.value())
                     .detail("Insira uma cozinha com id existente")
+//                    .intance(cozinha.getCause().getMessage())
                     .build();
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erroModel);
     }
 
     @ExceptionHandler(RestauranteException.class)
-    public ResponseEntity<ErroModel>restauranteNaoEncontrado(RestauranteException cozinha) {
+    public ResponseEntity<ErroModel>restauranteNaoEncontrado(RestauranteException restaurante) {
         ErroModel erroModel = ErroModel.builder.anErroModel()
-                .tittle("Restaurante não encontrada")
-                .message(cozinha.getMessage())
+                .tittle("Restaurante não encontrad0")
+                .message(restaurante.getMessage())
                 .status(HttpStatus.NOT_FOUND.value())
                 .detail("Insira um restaurante com id existente")
+//                .intance(restaurante.getCause().getMessage())
                 .build();
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erroModel);
