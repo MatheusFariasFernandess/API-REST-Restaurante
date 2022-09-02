@@ -31,7 +31,7 @@ public class ExceptionHandlerModel {
                 .message(restaurante.getMessage())
                 .status(HttpStatus.NOT_FOUND.value())
                 .detail("Insira um restaurante com id existente")
-//                .intance(restaurante.getCause().getMessage())
+//               .intance(restaurante.getCause().getMessage())
                 .build();
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erroModel);
