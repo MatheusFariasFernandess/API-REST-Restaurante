@@ -1,18 +1,10 @@
 package com.example.ordersrestapi.models;
 
-import com.example.ordersrestapi.models.DTO.CozinhaDTO;
-import net.bytebuddy.asm.Advice;
-import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.swing.text.StyledEditorKit;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,8 +41,10 @@ public class Restaurante {
     private LocalDateTime dataAtualizacao;
 
     @ManyToOne
-    @JsonIgnore
     private Cozinha cozinha;
+
+    @Embedded
+    private Endereco endereco;
 
     @ManyToMany
     @JoinTable(name = "restaurante_formas_de_pagamento_tb"
@@ -61,7 +55,7 @@ public class Restaurante {
     public Restaurante() {
     }
 
-    public Restaurante(Long id, String nome, BigDecimal taxaFrete, Boolean ativo, Boolean aberto, LocalDateTime dataCadastro, LocalDateTime dataAtualizacao,Cozinha cozinha) {
+    public Restaurante(Long id, String nome, BigDecimal taxaFrete, Boolean ativo, Boolean aberto, LocalDateTime dataCadastro, LocalDateTime dataAtualizacao,Cozinha cozinha,Endereco endereco) {
         this.id = id;
         this.nome = nome;
         this.taxaFrete = taxaFrete;
@@ -70,6 +64,7 @@ public class Restaurante {
         this.dataCadastro = dataCadastro;
         this.dataAtualizacao = dataAtualizacao;
         this.cozinha = cozinha;
+        this.endereco=endereco;
     }
 
     public Long getId() {
@@ -142,5 +137,12 @@ public class Restaurante {
 
     public void setFormasDePagamentos(List<FormasDePagamento> formasDePagamentos) {
         this.formasDePagamentos = formasDePagamentos;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 }

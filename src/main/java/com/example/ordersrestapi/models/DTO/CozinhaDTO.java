@@ -40,12 +40,12 @@ public class CozinhaDTO {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
-    public List<Restaurante> getRestaurantes() {
-        return restaurantes;
-    }
-
-    public void setRestaurantes(List<Restaurante> restaurantes) {
-        this.restaurantes = restaurantes;
-    }
+//
+//    public List<Restaurante> getRestaurantes() {
+//        return restaurantes;
+//    }
+//
+//    public void setRestaurantes(List<Restaurante> restaurantes) {
+//        this.restaurantes = restaurantes;
+//    }
 }

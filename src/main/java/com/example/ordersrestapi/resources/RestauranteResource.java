@@ -56,16 +56,6 @@ public class RestauranteResource {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(restauranteUpdated);
     }
 
-    @PutMapping("/restaurantes/atualizar/cozinha/por-id/{id}")
-    public ResponseEntity<Restaurante>autalizarCozinha(@PathVariable("id") Long id,
-                                                      @RequestBody Cozinha cozinha){
-
-        Restaurante restaurante = restauranteService.findById(id);
-
-//        restaurante.setCozinhaIndividual(cozinha);
-
-        return ResponseEntity.status(HttpStatus.OK).body(restauranteService.findById(id));
-    }
     @DeleteMapping("/restaurantes/deletar/por-id/{id}")
     public ResponseEntity<?>deletePorId(@PathVariable("id") Long id){
 
