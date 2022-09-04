@@ -2,7 +2,9 @@ package com.example.ordersrestapi.resources;
 
 import com.example.ordersrestapi.models.Cozinha;
 import com.example.ordersrestapi.models.DTO.CozinhaDTO;
+import com.example.ordersrestapi.models.Restaurante;
 import com.example.ordersrestapi.services.CozinhaService;
+import com.example.ordersrestapi.services.RestauranteService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +18,11 @@ public class CozinhaResource {
 
     private final CozinhaService cozinhaService;
 
+    private final RestauranteService restauranteService;
 
-    public CozinhaResource(CozinhaService cozinhaService) {
+    public CozinhaResource(CozinhaService cozinhaService, RestauranteService restauranteService) {
         this.cozinhaService = cozinhaService;
+        this.restauranteService = restauranteService;
     }
 
     @GetMapping("cozinhas/buscar/por-id/{id}")
@@ -41,8 +45,6 @@ public class CozinhaResource {
 
     @DeleteMapping("cozinhas/deletar/por-id/{id}")
     public ResponseEntity<HttpStatus>deletar(@PathVariable("id")Long id) {
-
-        cozinhaService.deleteById(id);
 
         return ResponseEntity.status(HttpStatus.GONE).build();
     }

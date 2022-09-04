@@ -5,6 +5,7 @@ import com.example.ordersrestapi.models.Cozinha;
 import com.example.ordersrestapi.models.DTO.CozinhaDTO;
 import com.example.ordersrestapi.repositories.CozinhaRespository;
 import org.modelmapper.ModelMapper;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class CozinhaService {
 
     public Cozinha findById(Long id){
         return cozinhaRespository.findById(id)
-                .orElseThrow( ()-> new CozinhaException("Cozinha com este ID não existe"));
+                .orElseThrow( ()-> new CozinhaException("Cozinha com o ID:"+ id +" não existe"));
     }
 
     public void saveCozinha(Cozinha cozinha){
@@ -42,8 +43,14 @@ public class CozinhaService {
 
     public void deleteById(Long id) {
 
-        Cozinha cozinha = findById(id);
+        try {
+            Cozinha cozinha = findById(id);
 
-        cozinhaRespository.delete(cozinha);
+            cozinhaRespository.delete(cozinha);
+
+        }catch (DataIntegrityViolationException e){
+            throw new CozinhaException("Cozinha com o ID " + id +" já está em uso por algum ou alguns restaurantes");
+        }
+
     }
 }

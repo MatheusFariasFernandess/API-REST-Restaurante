@@ -1,12 +1,12 @@
 package com.example.ordersrestapi.exceptions.models;
 
-public class RestauranteException extends RuntimeException{
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
+public class RestauranteException extends RuntimeException {
 
     public RestauranteException(String msg){
         super(msg);
     }
 
-    public RestauranteException(){
-
-    }
 }
