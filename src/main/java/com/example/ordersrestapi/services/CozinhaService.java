@@ -22,15 +22,19 @@ public class CozinhaService {
         this.modelMapper = modelMapper;
     }
 
+//
+//    public List<CozinhaDTO>findAll(){
+//        return cozinhaRespository.findAll()
+//                .stream()
+//                .map(cozinha -> modelMapper.map(cozinha, CozinhaDTO.class))
+//                .collect(Collectors.toList());
+//
+//    }
 
-    public List<CozinhaDTO>findAll(){
-        return cozinhaRespository.findAll()
-                .stream()
-                .map(cozinha -> modelMapper.map(cozinha, CozinhaDTO.class))
-                .collect(Collectors.toList());
 
+    public List<Cozinha>findAll(){
+        return cozinhaRespository.findAll();
     }
-
 
     public Cozinha findById(Long id){
         return cozinhaRespository.findById(id)

@@ -2,6 +2,7 @@ package com.example.ordersrestapi.models;
 
 import com.example.ordersrestapi.models.DTO.CozinhaDTO;
 import net.bytebuddy.asm.Advice;
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -48,6 +49,7 @@ public class Restaurante {
     private LocalDateTime dataAtualizacao;
 
     @ManyToOne
+    @JsonIgnore
     private Cozinha cozinha;
 
     @ManyToMany

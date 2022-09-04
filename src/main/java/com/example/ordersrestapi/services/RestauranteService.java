@@ -22,13 +22,17 @@ public class RestauranteService {
         this.modelMapper = modelMapper;
     }
 
-    public List<RestauranteDTO>findAll(){
+//    public List<RestauranteDTO>findAll(){
+//
+//        return restauranteRepository.findAll()
+//                .stream()
+//                .map(restaurante -> modelMapper.map(restaurante, RestauranteDTO.class))
+//                .collect(Collectors.toList());
+//
+//    }
 
-        return restauranteRepository.findAll()
-                .stream()
-                .map(restaurante -> modelMapper.map(restaurante, RestauranteDTO.class))
-                .collect(Collectors.toList());
-
+    public List<Restaurante>findAll(){
+        return restauranteRepository.findAll();
     }
 
     public  Restaurante findById(Long id){

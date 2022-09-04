@@ -1,5 +1,7 @@
 package com.example.ordersrestapi.models;
 
+import net.minidev.json.annotate.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,7 @@ public class Cozinha {
     @Column(name = "cozinha_nome")
     private String nome;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "cozinha")
     private List<Restaurante> restaurantes = new ArrayList<>();
     public Cozinha() {

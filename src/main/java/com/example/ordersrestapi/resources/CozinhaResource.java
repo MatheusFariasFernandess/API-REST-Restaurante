@@ -31,7 +31,7 @@ public class CozinhaResource {
     }
 
     @GetMapping("cozinhas/buscar/todos")
-    public ResponseEntity<List<CozinhaDTO>>buscarTodos(){
+    public ResponseEntity<List<Cozinha>>buscarTodos(){
         return ResponseEntity.status(HttpStatus.FOUND).body(cozinhaService.findAll());
     }
 

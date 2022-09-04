@@ -27,7 +27,7 @@ public class RestauranteResource {
 
 
     @GetMapping("/restaurantes/buscar/todos")
-    public ResponseEntity<List<RestauranteDTO>>listarTodos(){
+    public ResponseEntity<List<Restaurante>>listarTodos(){
         return ResponseEntity.ok().body(restauranteService.findAll());
     }
 
