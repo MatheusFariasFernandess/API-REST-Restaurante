@@ -1,5 +1,6 @@
 package com.example.ordersrestapi.models;
 
+import com.example.ordersrestapi.models.DTO.CozinhaDTO;
 import net.bytebuddy.asm.Advice;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -46,8 +47,8 @@ public class Restaurante {
     @Column(name = "restaurante_data_atualização")
     private LocalDateTime dataAtualizacao;
 
-    @OneToMany(mappedBy = "restaurante")
-    private List<Cozinha>cozinhas;
+    @ManyToOne
+    private Cozinha cozinha;
 
     @ManyToMany
     @JoinTable(name = "restaurante_formas_de_pagamento_tb"
@@ -58,7 +59,7 @@ public class Restaurante {
     public Restaurante() {
     }
 
-    public Restaurante(Long id, String nome, BigDecimal taxaFrete, Boolean ativo, Boolean aberto, LocalDateTime dataCadastro, LocalDateTime dataAtualizacao) {
+    public Restaurante(Long id, String nome, BigDecimal taxaFrete, Boolean ativo, Boolean aberto, LocalDateTime dataCadastro, LocalDateTime dataAtualizacao,Cozinha cozinha) {
         this.id = id;
         this.nome = nome;
         this.taxaFrete = taxaFrete;
@@ -66,6 +67,7 @@ public class Restaurante {
         this.aberto = aberto;
         this.dataCadastro = dataCadastro;
         this.dataAtualizacao = dataAtualizacao;
+        this.cozinha = cozinha;
     }
 
     public Long getId() {
@@ -124,84 +126,19 @@ public class Restaurante {
         this.dataAtualizacao = dataAtualizacao;
     }
 
-    public List<Cozinha> getCozinhas() {
-        return cozinhas;
+    public Cozinha getCozinha() {
+        return cozinha;
     }
 
-    public void setCozinhas(List<Cozinha> cozinhas) {
-        this.cozinhas = cozinhas;
+    public void setCozinha(Cozinha cozinha) {
+        this.cozinha = cozinha;
     }
 
-    public void setCozinhaIndividual(Cozinha cozinha){
-        this.cozinhas.add(cozinha);
+    public List<FormasDePagamento> getFormasDePagamentos() {
+        return formasDePagamentos;
     }
 
-    public static final class builder {
-        private Long id;
-        @NotEmpty
-        private String nome;
-        private BigDecimal taxaFrete;
-        @NotNull
-        private Boolean ativo;
-        @NotNull
-        private Boolean aberto;
-        @CreationTimestamp
-        private LocalDateTime dataCadastro;
-        @UpdateTimestamp
-        private LocalDateTime dataAtualizacao;
-
-        private builder() {
-        }
-
-        public static builder aRestaurante() {
-            return new builder();
-        }
-
-        public builder id(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public builder nome(String nome) {
-            this.nome = nome;
-            return this;
-        }
-
-        public builder taxaFrete(BigDecimal taxaFrete) {
-            this.taxaFrete = taxaFrete;
-            return this;
-        }
-
-        public builder ativo(Boolean ativo) {
-            this.ativo = ativo;
-            return this;
-        }
-
-        public builder aberto(Boolean aberto) {
-            this.aberto = aberto;
-            return this;
-        }
-
-        public builder dataCadastro(LocalDateTime dataCadastro) {
-            this.dataCadastro = dataCadastro;
-            return this;
-        }
-
-        public builder dataAtualizacao(LocalDateTime dataAtualizacao) {
-            this.dataAtualizacao = dataAtualizacao;
-            return this;
-        }
-
-        public Restaurante build() {
-            Restaurante restaurante = new Restaurante();
-            restaurante.setId(id);
-            restaurante.setNome(nome);
-            restaurante.setTaxaFrete(taxaFrete);
-            restaurante.setAtivo(ativo);
-            restaurante.setAberto(aberto);
-            restaurante.setDataCadastro(dataCadastro);
-            restaurante.setDataAtualizacao(dataAtualizacao);
-            return restaurante;
-        }
+    public void setFormasDePagamentos(List<FormasDePagamento> formasDePagamentos) {
+        this.formasDePagamentos = formasDePagamentos;
     }
 }

@@ -1,6 +1,8 @@
 package com.example.ordersrestapi.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "cozinha_tb")
@@ -10,16 +12,16 @@ public class Cozinha {
     private Long id;
     @Column(name = "cozinha_nome")
     private String nome;
-    @ManyToOne
-    @JoinColumn(name = "restaurante_id")
-    private Restaurante restaurante;
+
+    @OneToMany(mappedBy = "cozinha")
+    private List<Restaurante> restaurantes = new ArrayList<>();
     public Cozinha() {
     }
 
-    public Cozinha(Long id, String nome, Restaurante restaurante) {
+    public Cozinha(Long id, String nome, List<Restaurante> restaurantes) {
         this.id = id;
         this.nome = nome;
-        this.restaurante = restaurante;
+        this.restaurantes = restaurantes;
     }
 
     public Long getId() {
@@ -38,49 +40,12 @@ public class Cozinha {
         this.nome = nome;
     }
 
-    public Restaurante getRestaurante() {
-        return restaurante;
+    public List<Restaurante> getRestaurantes() {
+        return restaurantes;
     }
 
-    public void setRestaurante(Restaurante restaurante) {
-        this.restaurante = restaurante;
+    public void setRestaurantes(List<Restaurante> restaurantes) {
+        this.restaurantes = restaurantes;
     }
 
-
-
-    public static final class builder {
-        private Long id;
-        private String nome;
-        private Restaurante restaurante;
-
-        private builder() {
-        }
-
-        public static builder aCozinha() {
-            return new builder();
-        }
-
-        public builder id(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public builder nome(String nome) {
-            this.nome = nome;
-            return this;
-        }
-
-        public builder restaurante(Restaurante restaurante) {
-            this.restaurante = restaurante;
-            return this;
-        }
-
-        public Cozinha build() {
-            Cozinha cozinha = new Cozinha();
-            cozinha.setId(id);
-            cozinha.setNome(nome);
-            cozinha.setRestaurante(restaurante);
-            return cozinha;
-        }
-    }
 }

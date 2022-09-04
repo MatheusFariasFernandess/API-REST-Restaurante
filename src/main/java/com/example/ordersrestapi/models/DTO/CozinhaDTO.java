@@ -1,8 +1,12 @@
 package com.example.ordersrestapi.models.DTO;
 
+import com.example.ordersrestapi.models.Restaurante;
 import net.minidev.json.annotate.JsonSmartAnnotation;
 
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CozinhaDTO {
 
@@ -10,16 +14,15 @@ public class CozinhaDTO {
 
     private String nome;
 
-    @ManyToOne
-    private RestauranteDTO restauranteDTO;
+    @OneToMany(mappedBy = "cozinha")
+    private List<Restaurante>restaurantes=new ArrayList<>();
 
     public CozinhaDTO() {
     }
 
-    public CozinhaDTO(Long id, String nome, RestauranteDTO restauranteDTO) {
-        this.id = id;
+    public CozinhaDTO(String nome, List<Restaurante> restaurantes) {
         this.nome = nome;
-        this.restauranteDTO = restauranteDTO;
+        this.restaurantes = restaurantes;
     }
 
     public Long getId() {
@@ -38,11 +41,11 @@ public class CozinhaDTO {
         this.nome = nome;
     }
 
-    public RestauranteDTO getRestauranteDTO() {
-        return restauranteDTO;
+    public List<Restaurante> getRestaurantes() {
+        return restaurantes;
     }
 
-    public void setRestauranteDTO(RestauranteDTO restauranteDTO) {
-        this.restauranteDTO = restauranteDTO;
+    public void setRestaurantes(List<Restaurante> restaurantes) {
+        this.restaurantes = restaurantes;
     }
 }

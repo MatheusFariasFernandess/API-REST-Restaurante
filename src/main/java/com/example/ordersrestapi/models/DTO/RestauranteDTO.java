@@ -2,6 +2,8 @@ package com.example.ordersrestapi.models.DTO;
 
 import com.example.ordersrestapi.models.Cozinha;
 
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -16,13 +18,14 @@ public class RestauranteDTO {
     private LocalDateTime dataCadastro;
     private LocalDateTime dataAtualizacao;
 
-    @OneToMany(mappedBy = "restauranteDTO")
-    private List<CozinhaDTO> cozinhasDTO;
+    @ManyToOne
+    @JoinColumn(name = "cozinha_id")
+    private Cozinha cozinha;
 
     public RestauranteDTO() {
     }
 
-    public RestauranteDTO(Long id, String nome, BigDecimal taxaFrete, Boolean ativo, Boolean aberto, LocalDateTime dataCadastro, LocalDateTime dataAtualizacao) {
+    public RestauranteDTO(Long id, String nome, BigDecimal taxaFrete, Boolean ativo, Boolean aberto, LocalDateTime dataCadastro, LocalDateTime dataAtualizacao, Cozinha cozinha) {
         this.id = id;
         this.nome = nome;
         this.taxaFrete = taxaFrete;
@@ -30,6 +33,7 @@ public class RestauranteDTO {
         this.aberto = aberto;
         this.dataCadastro = dataCadastro;
         this.dataAtualizacao = dataAtualizacao;
+        this.cozinha = cozinha;
     }
 
     public Long getId() {
@@ -88,13 +92,11 @@ public class RestauranteDTO {
         this.dataAtualizacao = dataAtualizacao;
     }
 
-//    public List<CozinhaDTO> getCozinhas() {
-//        return cozinhasDTO;
-//    }
-//
-//    public void setCozinhas(List<CozinhaDTO> cozinhasDTO) {
-//        this.cozinhasDTO = cozinhasDTO;
-//    }
+    public Cozinha getCozinha() {
+        return cozinha;
+    }
 
-
+    public void setCozinha(Cozinha cozinha) {
+        this.cozinha = cozinha;
+    }
 }
