@@ -1,5 +1,6 @@
 package com.example.ordersrestapi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
@@ -24,6 +25,10 @@ public class Produtos {
     @NotNull
     @Column(name = "produto_ativo")
     private Boolean ativo = true;
+
+    @ManyToOne
+    @JsonIgnore
+    private Restaurante restaurante;
 
     public Produtos() {
     }
@@ -74,5 +79,13 @@ public class Produtos {
 
     public void setAtivo(Boolean ativo) {
         this.ativo = ativo;
+    }
+
+    public Restaurante getRestaurante() {
+        return restaurante;
+    }
+
+    public void setRestaurante(Restaurante restaurante) {
+        this.restaurante = restaurante;
     }
 }

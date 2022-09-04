@@ -36,6 +36,9 @@ public class Restaurante {
     @Column(name = "restaurante_data_cadastro")
     private LocalDateTime dataCadastro;
 
+    @OneToMany(mappedBy = "restaurante")
+    private List<Produtos>produtos=new ArrayList<>();
+
     @UpdateTimestamp
     @Column(name = "restaurante_data_atualização")
     private LocalDateTime dataAtualizacao;
@@ -144,5 +147,13 @@ public class Restaurante {
     }
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
+    }
+
+    public List<Produtos> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<Produtos> produtos) {
+        this.produtos = produtos;
     }
 }

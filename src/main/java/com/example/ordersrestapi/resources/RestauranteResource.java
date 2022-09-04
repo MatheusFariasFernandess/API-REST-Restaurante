@@ -49,7 +49,7 @@ public class RestauranteResource {
 
         Restaurante restauranteUpdated = restauranteService.findById(id);
 
-        BeanUtils.copyProperties(restaurante,restauranteUpdated,"id","formasPagamento");
+        BeanUtils.copyProperties(restaurante,restauranteUpdated,"id","formasPagamento","dataCadastro");
 
         restauranteService.save(restauranteUpdated);
 
