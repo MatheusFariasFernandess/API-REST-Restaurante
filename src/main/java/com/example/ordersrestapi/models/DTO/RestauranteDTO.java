@@ -15,6 +15,7 @@ public class RestauranteDTO {
     private Boolean aberto;
     private LocalDateTime dataCadastro;
     private LocalDateTime dataAtualizacao;
+
     @OneToMany(mappedBy = "restauranteDTO")
     private List<CozinhaDTO> cozinhasDTO;
 
@@ -87,13 +88,13 @@ public class RestauranteDTO {
         this.dataAtualizacao = dataAtualizacao;
     }
 
-    public List<CozinhaDTO> getCozinhas() {
-        return cozinhasDTO;
-    }
-
-    public void setCozinhas(List<CozinhaDTO> cozinhasDTO) {
-        this.cozinhasDTO = cozinhasDTO;
-    }
+//    public List<CozinhaDTO> getCozinhas() {
+//        return cozinhasDTO;
+//    }
+//
+//    public void setCozinhas(List<CozinhaDTO> cozinhasDTO) {
+//        this.cozinhasDTO = cozinhasDTO;
+//    }
 
 
 }

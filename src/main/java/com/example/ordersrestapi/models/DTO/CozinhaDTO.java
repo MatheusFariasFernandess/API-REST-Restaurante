@@ -1,5 +1,7 @@
 package com.example.ordersrestapi.models.DTO;
 
+import net.minidev.json.annotate.JsonSmartAnnotation;
+
 import javax.persistence.ManyToOne;
 
 public class CozinhaDTO {
@@ -9,15 +11,15 @@ public class CozinhaDTO {
     private String nome;
 
     @ManyToOne
-    private CozinhaDTO cozinhaDTO;
+    private RestauranteDTO restauranteDTO;
 
     public CozinhaDTO() {
     }
 
-    public CozinhaDTO(Long id, String nome, CozinhaDTO cozinhaDTO) {
+    public CozinhaDTO(Long id, String nome, RestauranteDTO restauranteDTO) {
         this.id = id;
         this.nome = nome;
-        this.cozinhaDTO = cozinhaDTO;
+        this.restauranteDTO = restauranteDTO;
     }
 
     public Long getId() {
@@ -36,11 +38,11 @@ public class CozinhaDTO {
         this.nome = nome;
     }
 
-    public CozinhaDTO getCozinhaDTO() {
-        return cozinhaDTO;
+    public RestauranteDTO getRestauranteDTO() {
+        return restauranteDTO;
     }
 
-    public void setCozinhaDTO(CozinhaDTO cozinhaDTO) {
-        this.cozinhaDTO = cozinhaDTO;
+    public void setRestauranteDTO(RestauranteDTO restauranteDTO) {
+        this.restauranteDTO = restauranteDTO;
     }
 }

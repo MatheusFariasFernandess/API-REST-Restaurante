@@ -23,18 +23,18 @@ public class Restaurante {
     private Long id;
 
 
-//    @NotBlank
+    @NotBlank
     @Column(name = "restaurante_nome")
     private String nome;
 
-//    @NotBlank
+    @NotBlank
     @Column(name= "restaurante_taxa_frete")
     private BigDecimal taxaFrete;
 
-//    @NotNull
+    @NotNull
     private Boolean ativo;
 
-//    @NotNull
+    @NotNull
     private Boolean aberto;
 
     @CreationTimestamp

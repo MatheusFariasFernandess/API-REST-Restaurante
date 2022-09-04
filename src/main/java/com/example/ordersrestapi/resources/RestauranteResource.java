@@ -1,12 +1,11 @@
 package com.example.ordersrestapi.resources;
 
 import com.example.ordersrestapi.models.Cozinha;
+import com.example.ordersrestapi.models.DTO.RestauranteDTO;
 import com.example.ordersrestapi.models.Restaurante;
 import com.example.ordersrestapi.services.CozinhaService;
 import com.example.ordersrestapi.services.RestauranteService;
-import com.fasterxml.jackson.databind.util.BeanUtil;
 import org.springframework.beans.BeanUtils;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/restaurantes")
+@RequestMapping("/api")
 public class RestauranteResource {
 
     private final RestauranteService restauranteService;
@@ -27,16 +26,16 @@ public class RestauranteResource {
     }
 
 
-    @GetMapping("/buscar/todos")
-    public ResponseEntity<List<Restaurante>>listarTodos(){
+    @GetMapping("/restaurantes/buscar/todos")
+    public ResponseEntity<List<RestauranteDTO>>listarTodos(){
         return ResponseEntity.ok().body(restauranteService.findAll());
     }
 
-    @GetMapping("/buscar/por-id/{id}")
+    @GetMapping("/restaurantes/buscar/por-id/{id}")
     public ResponseEntity<Restaurante>findById(@PathVariable("id") Long id){
         return ResponseEntity.status(HttpStatus.FOUND).body(restauranteService.findById(id));
     }
-    @PostMapping("/cadastrar")
+    @PostMapping("/restaurantes/cadastrar")
     public ResponseEntity<?>cadastrar(@RequestBody Restaurante restaurante){
 
          restauranteService.save(restaurante);
@@ -44,14 +43,35 @@ public class RestauranteResource {
          return ResponseEntity.status(HttpStatus.CREATED).body(restaurante);
     }
 
-    @PutMapping("/atualizar/cozinha/por-id/{id}")
+    @PutMapping("/restaurantes/atualizar/por-id/{id}")
+    public ResponseEntity<Restaurante>atualizarRestaurante(@PathVariable("id")Long id,
+                                                           @RequestBody Restaurante restaurante){
+
+        Restaurante restauranteUpdated = restauranteService.findById(id);
+
+        BeanUtils.copyProperties(restaurante,restauranteUpdated,"id");
+
+        restauranteService.save(restauranteUpdated);
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(restauranteUpdated);
+    }
+
+    @PutMapping("/restaurantes/atualizar/cozinha/por-id/{id}")
     public ResponseEntity<Restaurante>autalizarCozinha(@PathVariable("id") Long id,
                                                       @RequestBody Cozinha cozinha){
 
         Restaurante restaurante = restauranteService.findById(id);
 
-        restaurante.setCozinhaIndividual(cozinha);
+//        restaurante.setCozinhaIndividual(cozinha);
 
         return ResponseEntity.status(HttpStatus.OK).body(restauranteService.findById(id));
     }
+    @DeleteMapping("/restaurantes/deletar/por-id/{id}")
+    public ResponseEntity<?>deletePorId(@PathVariable("id") Long id){
+
+        restauranteService.deleteById(id);
+
+        return ResponseEntity.status(HttpStatus.GONE).build();
+    }
+
 }
