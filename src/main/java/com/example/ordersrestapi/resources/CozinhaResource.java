@@ -53,7 +53,7 @@ public class CozinhaResource {
     public ResponseEntity<Cozinha>deletarPorId(@PathVariable("id")Long id,
                                                   @RequestBody Cozinha cozinha){
 
-         Cozinha cozinhaUpdated = cozinhaService.findById(id);
+        Cozinha cozinhaUpdated = cozinhaService.findById(id);
 
         BeanUtils.copyProperties(cozinha,cozinhaUpdated);
 

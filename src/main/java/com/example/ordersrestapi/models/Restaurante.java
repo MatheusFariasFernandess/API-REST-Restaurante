@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,18 +24,18 @@ public class Restaurante {
     private Long id;
 
 
-    @NotBlank
+//    @NotBlank
     @Column(name = "restaurante_nome")
     private String nome;
 
-    @NotBlank
+//    @NotBlank
     @Column(name= "restaurante_taxa_frete")
     private BigDecimal taxaFrete;
 
-    @NotNull
+//    @NotNull
     private Boolean ativo;
 
-    @NotNull
+//    @NotNull
     private Boolean aberto;
 
     @CreationTimestamp
@@ -47,6 +48,12 @@ public class Restaurante {
 
     @OneToMany(mappedBy = "restaurante")
     private List<Cozinha>cozinhas;
+
+    @ManyToMany
+    @JoinTable(name = "restaurante_formas_de_pagamento_tb"
+            ,joinColumns=@JoinColumn(name = "restaurante_id")
+            ,inverseJoinColumns = @JoinColumn(name= "forma_de_pagamento_id"))
+    public List<FormasDePagamento>formasDePagamentos = new ArrayList<>();
 
     public Restaurante() {
     }
