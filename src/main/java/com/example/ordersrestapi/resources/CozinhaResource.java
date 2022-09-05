@@ -1,5 +1,6 @@
 package com.example.ordersrestapi.resources;
 
+import com.example.ordersrestapi.exceptions.models.CozinhaException;
 import com.example.ordersrestapi.models.Cozinha;
 import com.example.ordersrestapi.models.DTO.CozinhaDTO;
 import com.example.ordersrestapi.models.Restaurante;
@@ -45,6 +46,9 @@ public class CozinhaResource {
 
     @DeleteMapping("cozinhas/deletar/por-id/{id}")
     public ResponseEntity<HttpStatus>deletar(@PathVariable("id")Long id) {
+
+            cozinhaService.deleteById(id);
+
 
         return ResponseEntity.status(HttpStatus.GONE).build();
     }

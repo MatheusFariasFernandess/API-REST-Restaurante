@@ -4,6 +4,7 @@ import com.example.ordersrestapi.exceptions.models.CozinhaException;
 import com.example.ordersrestapi.models.Cozinha;
 import com.example.ordersrestapi.repositories.CozinhaRespository;
 import org.modelmapper.ModelMapper;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,15 +19,6 @@ public class CozinhaService {
         this.cozinhaRespository = cozinhaRespository;
         this.modelMapper = modelMapper;
     }
-
-//
-//    public List<CozinhaDTO>findAll(){
-//        return cozinhaRespository.findAll()
-//                .stream()
-//                .map(cozinha -> modelMapper.map(cozinha, CozinhaDTO.class))
-//                .collect(Collectors.toList());
-//
-//    }
 
 
     public List<Cozinha>findAll(){
@@ -44,8 +36,15 @@ public class CozinhaService {
 
     public void deleteById(Long id) {
 
-        Cozinha cozinha = findById(id);
+        Cozinha cozinha = this.findById(id);
 
-        cozinhaRespository.delete(cozinha);
+        try {
+              if(cozinha.getRestaurantes()!=null) {
+                  cozinhaRespository.delete(cozinha);
+              }
+        }catch (DataIntegrityViolationException e){
+            throw new CozinhaException("Esta cozinha esta associada a um restaurante");
+         }
+
     }
 }
