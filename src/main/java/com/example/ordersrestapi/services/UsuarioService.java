@@ -1,5 +1,6 @@
 package com.example.ordersrestapi.services;
 
+import com.example.ordersrestapi.exceptions.models.UsuarioException;
 import com.example.ordersrestapi.models.Usuario;
 import com.example.ordersrestapi.repositories.UsuarioRepository;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,17 @@ public class UsuarioService {
 
     public Usuario findById(Long id){
         return usuarioRepository.findById(id)
-                .orElseThrow();
+                .orElseThrow( ()-> new UsuarioException("Usuario com o ID:"+id+" não existe"));
+    }
+
+    public void deleteById(long id){
+
+        Usuario usuario = this.findById(id);
+
+        usuarioRepository.delete(usuario);
+    }
+
+    public void saveUser(Usuario usuario) {
+        usuarioRepository.save(usuario);
     }
 }
