@@ -36,4 +36,6 @@ public class ExceptionHandlerModel {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erroModel);
     }
+
+
 }
