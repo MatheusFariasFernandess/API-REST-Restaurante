@@ -17,40 +17,31 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.websocket.OnClose;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class ExceptionHandlerModel extends ResponseEntityExceptionHandler {
 
     public ResponseEntity<Object>invalidFormatDataException(InvalidFormatException e){
 
+        String getPath = e.getPath()
+                .stream()
+                .map( ref -> ref.getFieldName()).collect(Collectors.joining("."));
+
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                 ErroModel.builder.anErroModel()
                         .tittle("Formato invalido exception")
                         .message(e.getLocalizedMessage())
-                        .detail("Algum campo está com o formato do dado incompativel")
+                        .detail(String.format("O parametro '%s' recebeu um valor do tipo '%s' no qual é invalido, " +
+                                "insira um valor do tipo '%s' "
+                                ,getPath
+                                , e.getValue(),e.getTargetType().getSimpleName()))
                         .status(HttpStatus.BAD_REQUEST.value())
                         .build());
 
     }
 
-    @Override
-    protected ResponseEntity<Object>handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
-                                                                 HttpHeaders headers, HttpStatus status, WebRequest request){
-        Throwable rootCause = ExceptionUtils.getRootCause(ex);
-
-        if(rootCause instanceof InvalidFormatException ){
-            return invalidFormatDataException((InvalidFormatException) rootCause );
-        }
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErroModel.builder.anErroModel()
-                .tittle("Mensagem não compreendida")
-                .message(rootCause.getMessage())
-                .detail("corpo da requisição está com algum campo invalido ou erro de sintaxe")
-                .status(HttpStatus.BAD_REQUEST.value())
-                .build());
-
-
-    }
 
     @ExceptionHandler(CozinhaException.class)
     public ResponseEntity<ErroModel>cozinhaNaoEncontrada(CozinhaException cozinha){
@@ -96,7 +87,14 @@ public class ExceptionHandlerModel extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<ErroModel>dataIntegrity(DataIntegrityViolationException exception){
+    public ResponseEntity<Object>dataIntegrity(DataIntegrityViolationException exception){
+
+        Throwable throwable = ExceptionUtils.getRootCause(exception);
+
+        if(throwable instanceof InvalidFormatException){
+            return invalidFormatDataException( (InvalidFormatException) throwable );
+        }
+
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErroModel.builder.anErroModel()
                 .tittle("Data Integrity Violation ")
                 .message(exception.getMessage())
@@ -105,4 +103,25 @@ public class ExceptionHandlerModel extends ResponseEntityExceptionHandler {
                 .build()
         );
     }
+
+
+    @Override
+    protected ResponseEntity<Object>handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
+                                                                 HttpHeaders headers, HttpStatus status, WebRequest request){
+        Throwable rootCause = ExceptionUtils.getRootCause(ex);
+
+        if(rootCause instanceof InvalidFormatException ){
+            return invalidFormatDataException((InvalidFormatException) rootCause );
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErroModel.builder.anErroModel()
+                .tittle("Mensagem não compreendida")
+                .message(rootCause.getMessage())
+                .detail("corpo da requisição está com algum campo invalido ou erro de sintaxe")
+                .status(HttpStatus.BAD_REQUEST.value())
+                .build());
+
+
+    }
+
 }
