@@ -3,6 +3,7 @@ package com.example.ordersrestapi.models;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "grupo_tb")
@@ -45,4 +46,16 @@ public class Grupo {
         this.nomme = nomme;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Grupo grupo = (Grupo) o;
+        return Objects.equals(id, grupo.id) && Objects.equals(nomme, grupo.nomme) && Objects.equals(permissaos, grupo.permissaos);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nomme, permissaos);
+    }
 }

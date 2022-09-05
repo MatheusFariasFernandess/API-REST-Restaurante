@@ -1,6 +1,7 @@
 package com.example.ordersrestapi.models;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "permissao_tb")
@@ -44,5 +45,18 @@ public class Permissao {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Permissao permissao = (Permissao) o;
+        return Objects.equals(id, permissao.id) && Objects.equals(nome, permissao.nome) && Objects.equals(descricao, permissao.descricao);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nome, descricao);
     }
 }

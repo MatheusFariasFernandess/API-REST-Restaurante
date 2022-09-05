@@ -2,14 +2,11 @@ package com.example.ordersrestapi.services;
 
 import com.example.ordersrestapi.exceptions.models.CozinhaException;
 import com.example.ordersrestapi.models.Cozinha;
-import com.example.ordersrestapi.models.DTO.CozinhaDTO;
 import com.example.ordersrestapi.repositories.CozinhaRespository;
 import org.modelmapper.ModelMapper;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CozinhaService {
@@ -47,14 +44,8 @@ public class CozinhaService {
 
     public void deleteById(Long id) {
 
-        try {
-            Cozinha cozinha = findById(id);
+        Cozinha cozinha = findById(id);
 
-            cozinhaRespository.delete(cozinha);
-
-        }catch (DataIntegrityViolationException e){
-            throw new CozinhaException("Cozinha com o ID " + id +" já está em uso por algum ou alguns restaurantes");
-        }
-
+        cozinhaRespository.delete(cozinha);
     }
 }

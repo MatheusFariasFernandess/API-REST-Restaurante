@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "restaurante_tb")
@@ -155,5 +156,18 @@ public class Restaurante {
 
     public void setProdutos(List<Produtos> produtos) {
         this.produtos = produtos;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Restaurante that = (Restaurante) o;
+        return Objects.equals(id, that.id) && Objects.equals(nome, that.nome) && Objects.equals(taxaFrete, that.taxaFrete) && Objects.equals(ativo, that.ativo) && Objects.equals(aberto, that.aberto) && Objects.equals(dataCadastro, that.dataCadastro) && Objects.equals(produtos, that.produtos) && Objects.equals(dataAtualizacao, that.dataAtualizacao) && Objects.equals(cozinha, that.cozinha) && Objects.equals(endereco, that.endereco) && Objects.equals(formasDePagamentos, that.formasDePagamentos);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nome, taxaFrete, ativo, aberto, dataCadastro, produtos, dataAtualizacao, cozinha, endereco, formasDePagamentos);
     }
 }

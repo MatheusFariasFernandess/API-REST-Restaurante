@@ -1,5 +1,6 @@
 package com.example.ordersrestapi.services;
 
+import com.example.ordersrestapi.exceptions.models.CozinhaException;
 import com.example.ordersrestapi.exceptions.models.RestauranteException;
 import com.example.ordersrestapi.models.DTO.RestauranteDTO;
 import com.example.ordersrestapi.models.Restaurante;
@@ -51,5 +52,11 @@ public class RestauranteService {
         Restaurante restaurante = findById(id);
 
         restauranteRepository.delete(restaurante);
+    }
+
+    public void delete(Long id){
+
+       Restaurante restaurante = findById(id);
+
     }
 }
