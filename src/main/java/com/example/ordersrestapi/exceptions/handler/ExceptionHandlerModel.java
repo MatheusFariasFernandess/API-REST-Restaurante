@@ -3,6 +3,8 @@ package com.example.ordersrestapi.exceptions.handler;
 import com.example.ordersrestapi.exceptions.models.CozinhaException;
 import com.example.ordersrestapi.exceptions.models.ErroModel;
 import com.example.ordersrestapi.exceptions.models.RestauranteException;
+import com.example.ordersrestapi.exceptions.models.UsuarioException;
+import com.example.ordersrestapi.repositories.UsuarioRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -37,5 +39,15 @@ public class ExceptionHandlerModel {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erroModel);
     }
 
+    @ExceptionHandler(UsuarioException.class)
+    public ResponseEntity<ErroModel>usuarioNaoEncontraro(UsuarioException usuario){
+        ErroModel erroModel = ErroModel.builder.anErroModel()
+                .tittle("Usuario não encontrado")
+                .message(usuario.getMessage())
+                .status(HttpStatus.NOT_FOUND.value())
+                .detail("insiar um ID valido de usuario")
+                .build();
 
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erroModel);
+    }
 }
