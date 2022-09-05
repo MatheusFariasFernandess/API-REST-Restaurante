@@ -59,6 +59,10 @@ public class ErroModel {
         this.detail=detail;
     }
 
+    public String getDetail() {
+        return detail;
+    }
+
     public static final class builder {
         private String tittle;
         private String message;
