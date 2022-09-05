@@ -46,10 +46,7 @@ public class CozinhaResource {
 
     @DeleteMapping("cozinhas/deletar/por-id/{id}")
     public ResponseEntity<HttpStatus>deletar(@PathVariable("id")Long id) {
-
             cozinhaService.deleteById(id);
-
-
         return ResponseEntity.status(HttpStatus.GONE).build();
     }
 
